@@ -30,9 +30,13 @@ node server.js
 ```
 
 ### Environment Variables
-Set any required API endpoints in Render's environment variables dashboard:
-- Configure your backend API URLs
-- Add any authentication keys if needed
+Add these in Render's Environment Variables dashboard:
+
+| Key | Value |
+|-----|-------|
+| `VITE_API_URL` | Your backend URL (e.g., `https://your-backend.onrender.com`) |
+
+**Important:** After setting `VITE_API_URL`, rebuild your frontend for changes to take effect.
 
 ## 📦 Tech Stack
 
