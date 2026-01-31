@@ -1,16 +1,81 @@
-# React + Vite
+# ScamShield - Scam Detection and Prevention Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive React-based platform for detecting, analyzing, and preventing scams. Features include scam search, screenshot analysis, phishing simulation, blog management, and more.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Development Mode
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+### Production Build
+```bash
+npm install
+npm run build
+node server.js
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🖥️ Render Deployment
 
-## Expanding the ESLint configuration
+### Build Command
+```bash
+npm install && npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Start Command
+```bash
+node server.js
+```
+
+### Environment Variables
+Set any required API endpoints in Render's environment variables dashboard:
+- Configure your backend API URLs
+- Add any authentication keys if needed
+
+## 📦 Tech Stack
+
+- **Frontend**: React 19, Vite
+- **Routing**: React Router DOM
+- **API**: Axios
+- **ML/AI**: TensorFlow.js (MobileNet)
+- **OCR**: Tesseract.js
+- **Server**: Express 5
+
+## 📁 Project Structure
+
+```
+src/
+├── components/     # Reusable components
+├── pages/          # Page components
+│   ├── admin/      # Admin dashboard
+│   ├── Blog.jsx
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── PhishingSimulator.jsx
+│   ├── ReportScam.jsx
+│   ├── ScamSearch.jsx
+│   ├── ScreenshotAnalyzer.jsx
+│   └── ...
+├── services/       # API services
+├── styles/         # CSS styles
+├── utils/          # Utility functions
+└── data/           # Static data
+```
+
+## 🎯 Features
+
+- 🔍 Scam Search & Detection
+- 📸 Screenshot Analysis (ML + OCR)
+- 🎣 Phishing Simulation
+- 📝 Blog Management
+- 👥 User Authentication
+- 🛡️ Admin Dashboard
+- 🏆 Leaderboard
+- 🔐 Password Tools
+
+## 📄 License
+
+MIT
+
