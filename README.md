@@ -35,7 +35,6 @@ Add these in Render's Environment Variables dashboard:
 | Key | Value |
 |-----|-------|
 | `VITE_API_URL` | Your backend URL (e.g., `https://your-backend.onrender.com`) |
-| `MONGODB_URI` | MongoDB connection string (e.g., `mongodb+srv://username:password@cluster.mongodb.net/bhi`) |
 
 **Important:** After setting `VITE_API_URL`, rebuild your frontend for changes to take effect.
 
