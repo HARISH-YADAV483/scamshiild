@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
-import bg from "../assets/backfround.jpeg"; 
+import api from "../services/api";
+import bg from "../assets/backfround.jpeg";
 
 export default function BlogDetails() {
   const { id } = useParams();
@@ -13,7 +13,7 @@ export default function BlogDetails() {
       setLoading(true);
 
 
-      const res = await axios.get(`http://localhost:5001/api/blogs/${id}`);
+      const res = await api.get(`/blogs/${id}`);
 
       setBlog(res.data);
     } catch (err) {
@@ -205,7 +205,7 @@ export default function BlogDetails() {
   }
 
   return (
-    <div 
+    <div
       className="details-page"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url(${bg})`,
@@ -217,7 +217,7 @@ export default function BlogDetails() {
       <style>{styles}</style>
 
       <div className="content-container">
-        
+
         {/* Navigation */}
         <Link to="/blogs" className="back-btn">
           ← Back to Intel Feed
@@ -245,7 +245,7 @@ export default function BlogDetails() {
 
         {/* Title Block */}
         <h1 className="article-title">{blog.title}</h1>
-        
+
         {blog.subtitle && blog.subtitle.trim() !== "" && (
           <p className="article-subtitle">{blog.subtitle}</p>
         )}

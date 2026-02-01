@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { getToken, getUser } from "../../utils/auth";
+import api from "../../services/api";
+import { getUser } from "../../utils/auth";
 
 export default function AdminVerifyBlogs() {
   const user = getUser();
@@ -12,11 +12,7 @@ export default function AdminVerifyBlogs() {
     try {
       setLoading(true);
 
-      const res = await axios.get("http://localhost:5000/api/blogs/admin/pending", {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
+      const res = await api.get("/blogs/admin/pending");
 
       setPendingBlogs(res.data || []);
     } catch (err) {
@@ -33,15 +29,7 @@ export default function AdminVerifyBlogs() {
 
   const handleVerify = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:5000/api/blogs/admin/verify/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        }
-      );
+      await api.put(`/blogs/admin/verify/${id}`, {});
 
       alert("✅ Blog Verified!");
       fetchPendingBlogs();
@@ -55,14 +43,9 @@ export default function AdminVerifyBlogs() {
     try {
       const adminNote = prompt("Enter rejection reason (optional):") || "Rejected";
 
-      await axios.put(
-        `http://localhost:5001/api/blogs/admin/reject/${id}`,
-        { adminNote },
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        }
+      await api.put(
+        `/blogs/admin/reject/${id}`,
+        { adminNote }
       );
 
       alert("❌ Blog Rejected!");

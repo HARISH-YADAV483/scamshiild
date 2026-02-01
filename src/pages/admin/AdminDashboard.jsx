@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { getToken } from "../../utils/auth"; // Ensure path is correct
+import api from "../../services/api";
 import bg from "../../assets/backfround.jpeg"; // Ensure path is correct
 
 export default function AdminDashboard() {
@@ -16,9 +15,7 @@ export default function AdminDashboard() {
   const fetchPendingReports = async () => {
     try {
       setLoadingReports(true);
-      const res = await axios.get("http://localhost:5001/api/admin/pending", {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const res = await api.get("/admin/pending");
       setPendingReports(res.data || []);
     } catch (err) {
       console.log("❌ Pending reports error:", err);
@@ -30,11 +27,7 @@ export default function AdminDashboard() {
   //  Verify scam report
   const verifyReport = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:5001/api/admin/verify/${id}`,
-        {},
-        { headers: { Authorization: `Bearer ${getToken()}` } }
-      );
+      await api.put(`/admin/verify/${id}`, {});
       fetchPendingReports();
     } catch (err) {
       console.log(err);
@@ -45,11 +38,7 @@ export default function AdminDashboard() {
   // Reject scam report
   const rejectReport = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:5001/api/admin/reject/${id}`,
-        {},
-        { headers: { Authorization: `Bearer ${getToken()}` } }
-      );
+      await api.put(`/admin/reject/${id}`, {});
       fetchPendingReports();
     } catch (err) {
       console.log(err);
@@ -61,9 +50,7 @@ export default function AdminDashboard() {
   const fetchPendingBlogs = async () => {
     try {
       setLoadingBlogs(true);
-      const res = await axios.get("http://localhost:5001/api/blogs/admin/pending", {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const res = await api.get("/blogs/admin/pending");
       setPendingBlogs(res.data || []);
     } catch (err) {
       console.log("❌ Pending blogs error:", err);
@@ -75,11 +62,7 @@ export default function AdminDashboard() {
   // Verify blog
   const verifyBlog = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:5001/api/blogs/admin/verify/${id}`,
-        {},
-        { headers: { Authorization: `Bearer ${getToken()}` } }
-      );
+      await api.put(`/blogs/admin/verify/${id}`, {});
       fetchPendingBlogs();
     } catch (err) {
       console.log(err);
@@ -91,10 +74,9 @@ export default function AdminDashboard() {
   const rejectBlog = async (id) => {
     try {
       const adminNote = prompt("Enter rejection reason (optional):") || "Rejected";
-      await axios.put(
-        `http://localhost:5001/api/blogs/admin/reject/${id}`,
-        { adminNote },
-        { headers: { Authorization: `Bearer ${getToken()}` } }
+      await api.put(
+        `/blogs/admin/reject/${id}`,
+        { adminNote }
       );
       fetchPendingBlogs();
     } catch (err) {
@@ -297,7 +279,7 @@ export default function AdminDashboard() {
   `;
 
   return (
-    <div 
+    <div
       className="admin-dashboard"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.95)), url(${bg})`,
@@ -327,12 +309,12 @@ export default function AdminDashboard() {
             {pendingReports.map((r) => (
               <div key={r._id} className="admin-card scam-card">
                 <div className="risk-badge">RISK: {r.susceptibilityScore}</div>
-                
+
                 <h3 className="card-title">{r.title}</h3>
-                
+
                 <p className="card-desc">
-                  {r.description?.length > 120 
-                    ? r.description.slice(0, 120) + "..." 
+                  {r.description?.length > 120
+                    ? r.description.slice(0, 120) + "..."
                     : r.description}
                 </p>
 
@@ -373,11 +355,11 @@ export default function AdminDashboard() {
           <div className="cards-grid">
             {pendingBlogs.map((b) => (
               <div key={b._id} className="admin-card blog-card">
-                
+
                 <h3 className="card-title">{b.title}</h3>
-                
+
                 {b.subtitle && (
-                  <p style={{color: 'var(--neon-green)', fontSize: '0.8rem', fontStyle: 'italic', marginBottom: '10px'}}>
+                  <p style={{ color: 'var(--neon-green)', fontSize: '0.8rem', fontStyle: 'italic', marginBottom: '10px' }}>
                     {b.subtitle}
                   </p>
                 )}
@@ -387,8 +369,8 @@ export default function AdminDashboard() {
                 )}
 
                 <p className="card-desc">
-                  {b.body?.length > 100 
-                    ? b.body.slice(0, 100) + "..." 
+                  {b.body?.length > 100
+                    ? b.body.slice(0, 100) + "..."
                     : b.body}
                 </p>
 

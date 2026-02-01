@@ -1,6 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
-import { getToken } from "../utils/auth";
+import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import bg from "../assets/backfround.jpeg";
 
@@ -37,9 +36,8 @@ export default function CreateBlog() {
       const fd = new FormData();
       fd.append("image", imageFile);
 
-      const res = await axios.post("http://localhost:5001/api/upload/image", fd, {
+      const res = await api.post("/upload/image", fd, {
         headers: {
-          Authorization: `Bearer ${getToken()}`,
           "Content-Type": "multipart/form-data",
         },
       });
@@ -69,11 +67,7 @@ export default function CreateBlog() {
         images: uploadedImageUrl ? [uploadedImageUrl] : [],
       };
 
-      await axios.post("http://localhost:5001/api/blogs", payload, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
+      await api.post("/blogs", payload);
 
       setSuccessMsg("✅ Report submitted! Awaiting admin verification.");
 
@@ -271,7 +265,7 @@ export default function CreateBlog() {
   `;
 
   return (
-    <div 
+    <div
       className="create-page"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url(${bg})`,
@@ -290,7 +284,7 @@ export default function CreateBlog() {
         {errorMsg && <div className="msg-box msg-error">{errorMsg}</div>}
 
         <form onSubmit={handleSubmit}>
-          
+
           <div className="form-group">
             <input
               name="title"
@@ -326,7 +320,7 @@ export default function CreateBlog() {
           {/* Upload Section */}
           <div className="upload-section">
             <label className="upload-label">ATTACH VISUAL EVIDENCE:</label>
-            
+
             <div className="file-input-wrapper">
               <input
                 type="file"

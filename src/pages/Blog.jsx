@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 import bg from "../assets/backfround.jpeg"; // Ensure this matches your file structure
 
 export default function Blog() {
@@ -14,7 +14,7 @@ export default function Blog() {
       setLoading(true);
       setErrorMsg("");
 
-      const res = await axios.get("http://localhost:5001/api/blogs");
+      const res = await api.get("/blogs");
       setBlogs(res.data || []);
     } catch (err) {
       console.log(err);

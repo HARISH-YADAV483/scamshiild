@@ -1,10 +1,9 @@
 import axios from "axios";
 
-// Use environment variable for production, fallback to proxy for local development
 const getBaseURL = () => {
   // For production, use the Render backend URL
   if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+    return `${import.meta.env.VITE_API_URL}/api`;
   }
   // For local development, use the proxy
   return "/api";

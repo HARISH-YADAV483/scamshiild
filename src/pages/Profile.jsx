@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
+import api from "../services/api";
 import { getMyProfile, updateProfilePic } from "../services/userService";
 import { getMyBlogs } from "../services/blogService";
-import { getToken } from "../utils/auth";
 import bg from "../assets/backfround.jpeg";
 
 export default function Profile() {
@@ -57,12 +55,11 @@ export default function Profile() {
       const fd = new FormData();
       fd.append("image", imageFile);
 
-      const uploadRes = await axios.post(
-        "http://localhost:5001/api/upload/image",
+      const uploadRes = await api.post(
+        "/upload/image",
         fd,
         {
           headers: {
-            Authorization: `Bearer ${getToken()}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -334,7 +331,7 @@ export default function Profile() {
   const pro = prog.pro || {};
 
   return (
-    <div 
+    <div
       className="profile-page"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url(${bg})`,
@@ -345,14 +342,14 @@ export default function Profile() {
     >
       <style>{styles}</style>
 
-      <h1 className="page-title">User <span style={{color: '#ff2a2a'}}>Identity</span></h1>
+      <h1 className="page-title">User <span style={{ color: '#ff2a2a' }}>Identity</span></h1>
 
       <div className="dashboard-grid">
-        
+
         {/* LEFT COLUMN: Identity Card */}
         <div className="cyber-card">
           <div className="card-title">👤 Personal Data</div>
-          
+
           <div className="identity-wrapper">
             <div className="profile-pic-container">
               <img
@@ -365,38 +362,38 @@ export default function Profile() {
                 className="profile-pic"
               />
             </div>
-            
+
             <div className="user-details">
               <h3>{user.name}</h3>
               <p className="email">{user.email}</p>
               <div style={{ marginTop: '10px', display: 'flex', gap: '15px' }}>
-                 <div>
-                    <span style={{color: '#666', fontSize: '0.8rem'}}>POINTS</span>
-                    <div style={{color: '#ff2a2a', fontWeight: 'bold', fontSize: '1.1rem'}}>{user.points || 0}</div>
-                 </div>
-                 <div>
-                    <span style={{color: '#666', fontSize: '0.8rem'}}>REPORTS</span>
-                    <div style={{color: '#fff', fontWeight: 'bold', fontSize: '1.1rem'}}>{user.reportsCount || 0}</div>
-                 </div>
+                <div>
+                  <span style={{ color: '#666', fontSize: '0.8rem' }}>POINTS</span>
+                  <div style={{ color: '#ff2a2a', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.points || 0}</div>
+                </div>
+                <div>
+                  <span style={{ color: '#666', fontSize: '0.8rem' }}>REPORTS</span>
+                  <div style={{ color: '#fff', fontWeight: 'bold', fontSize: '1.1rem' }}>{user.reportsCount || 0}</div>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="upload-section">
-            <label style={{color: '#888', fontSize: '0.85rem', marginBottom: '8px', display: 'block'}}>Update Avatar</label>
+            <label style={{ color: '#888', fontSize: '0.85rem', marginBottom: '8px', display: 'block' }}>Update Avatar</label>
             <div className="file-input-wrapper">
               <label className="custom-file-label">
                 {imageFile ? imageFile.name : "📁 Select Image..."}
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  onChange={(e) => setImageFile(e.target.files[0])} 
-                  style={{display: 'none'}}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImageFile(e.target.files[0])}
+                  style={{ display: 'none' }}
                 />
               </label>
-              <button 
-                className="upload-btn" 
-                onClick={handleUploadProfilePic} 
+              <button
+                className="upload-btn"
+                onClick={handleUploadProfilePic}
                 disabled={uploading}
               >
                 {uploading ? "Uploading..." : "Upload"}
@@ -407,7 +404,7 @@ export default function Profile() {
 
         {/* RIGHT COLUMN: Stats & Progress */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-          
+
           {/* Blog Summary */}
           <div className="cyber-card">
             <div className="card-title">📝 Content Stats</div>
@@ -422,11 +419,11 @@ export default function Profile() {
               </div>
               <div className="stat-box">
                 <span className="stat-label">Pending</span>
-                <span className="stat-value" style={{color: 'orange'}}>{pendingBlogs.length}</span>
+                <span className="stat-value" style={{ color: 'orange' }}>{pendingBlogs.length}</span>
               </div>
               <div className="stat-box">
                 <span className="stat-label">Rejected</span>
-                <span className="stat-value" style={{color: '#555'}}>{rejectedBlogs.length}</span>
+                <span className="stat-value" style={{ color: '#555' }}>{rejectedBlogs.length}</span>
               </div>
             </div>
           </div>
@@ -455,9 +452,9 @@ export default function Profile() {
         {/* BOTTOM FULL WIDTH: Pending Logs */}
         <div className="cyber-card full-width">
           <div className="card-title">⏳ Pending Approvals</div>
-          
+
           {pendingBlogs.length === 0 ? (
-            <div style={{textAlign: 'center', color: '#666', padding: '20px', fontStyle: 'italic'}}>
+            <div style={{ textAlign: 'center', color: '#666', padding: '20px', fontStyle: 'italic' }}>
               No pending content in queue.
             </div>
           ) : (
