@@ -1,10 +1,21 @@
 import axios from "axios";
 
 const getBaseURL = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // For production, use the Render backend URL
-  if (import.meta.env.VITE_API_URL) {
-    return `${import.meta.env.VITE_API_URL}/api`;
+  if (apiUrl) {
+    // Remove trailing slash if present to normalize
+    const cleanUrl = apiUrl.replace(/\/$/, "");
+
+    // Check if it already ends with /api
+    if (cleanUrl.endsWith("/api")) {
+      return cleanUrl;
+    }
+
+    return `${cleanUrl}/api`;
   }
+
   // For local development, use the proxy
   return "/api";
 };
