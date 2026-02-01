@@ -3,8 +3,8 @@ import { getToken } from "../utils/auth";
 
 // All endpoints are now relative to the baseURL set in api.js
 const endpoints = {
-  blogs: "/blogs",
-  myBlogs: "/blogs/my/list",
+  blogs: "/api/blogs",
+  myBlogs: "/api/blogs/my/list",
 };
 
 export const getVerifiedBlogs = () => api.get(endpoints.blogs);

@@ -3,9 +3,9 @@ import { getToken } from "../utils/auth";
 
 // All endpoints are now relative to the baseURL set in api.js
 const endpoints = {
-  me: "/users/me",
-  leaderboard: "/users/leaderboard",
-  profilePic: "/users/profile-pic",
+  me: "/api/users/me",
+  leaderboard: "/api/users/leaderboard",
+  profilePic: "/api/users/profile-pic",
 };
 
 export const getMyProfile = () =>
